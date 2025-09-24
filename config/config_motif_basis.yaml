@@ -1,0 +1,54 @@
+# Main configuration file for GNN experiments
+
+# Experiment settings
+experiment:
+  name: "moe_motif_basis"
+  device: "cuda"
+  seeds: [1, 2, 3, 4, 5]
+  hyper_search:
+    enable: false
+    n_trials_1: 10
+    test_after: true
+
+# Dataset configuration
+dataset:
+  dataset_name: "GOODMotif"
+  task_type: "graph_classification"
+  path: "./datasets"
+  shift_type: "covariate"
+  batch_size: 128
+  num_workers: 4
+  domain: 'basis'
+
+# Model configuration
+model:
+  type: "moe"
+  hidden_dim: 300
+  global_pooling: "mean"
+  num_layers: 3
+  dropout: 0.5
+  weight_reg: 1.0
+  weight_ce: 1.0
+  weight_div: 1.0
+  weight_load: 0.5
+  num_experts: 1
+  aggregation: "weighted_mean"
+  rho_edge: 0.55
+
+
+# Training configuration
+training:
+  epochs: 50
+  lr: 0.001
+  weight_decay: 0.0001
+  early_stopping:
+    patience: 10
+    min_delta: 0.001
+
+
+# Gating module configuration
+gate:
+  activation: "entmax"
+  entmax_alpha: 1.38
+  train_after: 10
+  finetune_epochs: 5
